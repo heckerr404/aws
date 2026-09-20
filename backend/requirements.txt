@@ -1,0 +1,3 @@
+# boto3 is provided by the Lambda runtime — do not add it here.
+# Only add packages NOT available in the runtime.
+# Currently: none needed (stdlib only).

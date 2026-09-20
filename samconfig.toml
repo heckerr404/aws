@@ -1,0 +1,9 @@
+# samconfig.toml — SAM CLI configuration for Haqdaar deployment
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "haqdaar"
+resolve_s3 = true
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+parameter_overrides = "AllowedOrigin=* BedrockModelId=anthropic.claude-3-5-haiku-20241022-v1:0"

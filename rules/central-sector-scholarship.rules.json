@@ -1,0 +1,116 @@
+{
+  "schemeId": "central-sector-scholarship",
+  "name": { "en": "Central Sector Scholarship", "hi": "केंद्रीय क्षेत्र छात्रवृत्ति" },
+  "ministry": "Ministry of Education",
+  "officialUrl": "https://scholarships.gov.in",
+  "sourcePdfKey": "raw/central-sector-scholarship.pdf",
+  "clauses": [
+    {
+      "clauseId": "CSS-R-01",
+      "kind": "requirement",
+      "attribute": "isEnrolledInHigherEd",
+      "op": "is_true",
+      "citation": {
+        "page": 2,
+        "section": "2.1",
+        "quote": "Students who have passed class XII and are enrolled in regular courses in Colleges/Universities are eligible."
+      },
+      "humanText": {
+        "en": "You must be enrolled in higher education (college/university).",
+        "hi": "आप उच्च शिक्षा (कॉलेज/विश्वविद्यालय) में नामांकित होने चाहिए।"
+      },
+      "remedy": {
+        "en": "You must be enrolled in a regular higher education programme.",
+        "hi": "आपको नियमित उच्च शिक्षा कार्यक्रम में नामांकित होना चाहिए।",
+        "counterfactual": { "attribute": "isEnrolledInHigherEd", "value": true }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "CSS-R-02",
+      "kind": "requirement",
+      "attribute": "class12Percentile",
+      "op": "gte",
+      "value": 80,
+      "citation": {
+        "page": 2,
+        "section": "2.2",
+        "quote": "Applicants must have scored in the top 20 percentile in their Class XII board examination."
+      },
+      "humanText": {
+        "en": "Your Class 12 score must be in the top 20 percentile (80th percentile or above).",
+        "hi": "आपका कक्षा 12 का अंक शीर्ष 20 प्रतिशत (80वां प्रतिशत या उससे अधिक) में होना चाहिए।"
+      },
+      "remedy": {
+        "en": "Your Class 12 board score must be in the top 20 percentile.",
+        "hi": "आपका कक्षा 12 बोर्ड स्कोर शीर्ष 20 प्रतिशत में होना चाहिए।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "CSS-R-03",
+      "kind": "requirement",
+      "attribute": "familyIncomeInr",
+      "op": "lte",
+      "value": 450000,
+      "citation": {
+        "page": 2,
+        "section": "2.3",
+        "quote": "Family income from all sources should not exceed Rs. 4.5 lakh per annum."
+      },
+      "humanText": {
+        "en": "Your family's annual income must not exceed ₹4,50,000.",
+        "hi": "आपके परिवार की वार्षिक आय ₹4,50,000 से अधिक नहीं होनी चाहिए।"
+      },
+      "remedy": {
+        "en": "Family income above ₹4,50,000 per annum disqualifies you from this scholarship.",
+        "hi": "₹4,50,000 प्रति वर्ष से अधिक पारिवारिक आय आपको इस छात्रवृत्ति के लिए अपात्र बनाती है।",
+        "counterfactual": { "attribute": "familyIncomeInr", "value": 450000 }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "CSS-R-04",
+      "kind": "requirement",
+      "attribute": "hasBankAccount",
+      "op": "is_true",
+      "citation": {
+        "page": 4,
+        "section": "4.2",
+        "quote": "Students must have a bank account for direct benefit transfer."
+      },
+      "humanText": {
+        "en": "You must have a bank account.",
+        "hi": "आपके पास बैंक खाता होना चाहिए।"
+      },
+      "remedy": {
+        "en": "A bank account is required for scholarship disbursement.",
+        "hi": "छात्रवृत्ति वितरण के लिए बैंक खाता आवश्यक है।",
+        "counterfactual": { "attribute": "hasBankAccount", "value": true }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "CSS-X-01",
+      "kind": "exclusion",
+      "attribute": "isGovtEmployee",
+      "op": "is_true",
+      "citation": {
+        "page": 3,
+        "section": "3.1",
+        "quote": "Children of government employees are not eligible for this scholarship."
+      },
+      "humanText": {
+        "en": "Children of government employees are not eligible.",
+        "hi": "सरकारी कर्मचारियों के बच्चे पात्र नहीं हैं।"
+      },
+      "remedy": {
+        "en": "This scholarship excludes children of government employees.",
+        "hi": "यह छात्रवृत्ति सरकारी कर्मचारियों के बच्चों को बाहर रखती है।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    }
+  ]
+}

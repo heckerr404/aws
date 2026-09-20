@@ -1,0 +1,44 @@
+{
+  "Haqdaar": {
+    "entityTypes": {
+      "Citizen": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "age": { "type": "Long", "required": true },
+            "familyIncomeInr": { "type": "Long", "required": true },
+            "state": { "type": "String", "required": true },
+            "gender": { "type": "String", "required": true },
+            "socialCategory": { "type": "String", "required": true },
+            "occupation": { "type": "String", "required": true },
+            "artisanTrade": { "type": "String", "required": true },
+            "hasCultivableLand": { "type": "Boolean", "required": true },
+            "isInstitutionalLandHolder": { "type": "Boolean", "required": true },
+            "isIncomeTaxPayer": { "type": "Boolean", "required": true },
+            "isGovtEmployee": { "type": "Boolean", "required": true },
+            "hasBankAccount": { "type": "Boolean", "required": true },
+            "isEnrolledInHigherEd": { "type": "Boolean", "required": true },
+            "class12Percentile": { "type": "Long", "required": true },
+            "hasAvailedSimilarCreditScheme5y": { "type": "Boolean", "required": true }
+          }
+        }
+      },
+      "Scheme": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "schemeId": { "type": "String", "required": true }
+          }
+        }
+      }
+    },
+    "actions": {
+      "CheckEligibility": {
+        "appliesTo": {
+          "principalTypes": ["Citizen"],
+          "resourceTypes": ["Scheme"]
+        }
+      }
+    }
+  }
+}

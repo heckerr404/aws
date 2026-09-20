@@ -1,0 +1,56 @@
+{
+  "murugan": {
+    "pm-kisan": "ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "NOT_ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "divya": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "ELIGIBLE",
+    "central-sector-scholarship": "ELIGIBLE"
+  },
+  "rafiq": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "ELIGIBLE",
+    "atal-pension-yojana": "ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "divya_over_income": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "murugan_taxpayer": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "NOT_ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "double_excluded": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "NOT_ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "age_40": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "age_41": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "NOT_ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  },
+  "age_17": {
+    "pm-kisan": "NOT_ELIGIBLE",
+    "pm-vishwakarma": "NOT_ELIGIBLE",
+    "atal-pension-yojana": "NOT_ELIGIBLE",
+    "central-sector-scholarship": "NOT_ELIGIBLE"
+  }
+}

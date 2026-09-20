@@ -1,0 +1,73 @@
+{
+  "schemeId": "atal-pension-yojana",
+  "name": { "en": "Atal Pension Yojana", "hi": "अटल पेंशन योजना" },
+  "ministry": "Ministry of Finance (PFRDA)",
+  "officialUrl": "https://npscra.nsdl.co.in/scheme-details.php",
+  "sourcePdfKey": "raw/atal-pension-yojana.pdf",
+  "clauses": [
+    {
+      "clauseId": "APY-R-01",
+      "kind": "requirement",
+      "attribute": "age",
+      "op": "between",
+      "value": [18, 40],
+      "citation": {
+        "page": 2,
+        "section": "2.1",
+        "quote": "Any citizen of India between the age of 18 to 40 years can join APY."
+      },
+      "humanText": {
+        "en": "You must be between 18 and 40 years old.",
+        "hi": "आपकी आयु 18 से 40 वर्ष के बीच होनी चाहिए।"
+      },
+      "remedy": {
+        "en": "APY is only open to citizens aged 18–40. You are outside this range.",
+        "hi": "APY केवल 18-40 वर्ष की आयु के नागरिकों के लिए खुली है।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "APY-R-02",
+      "kind": "requirement",
+      "attribute": "hasBankAccount",
+      "op": "is_true",
+      "citation": {
+        "page": 2,
+        "section": "2.2",
+        "quote": "Applicants must have a savings bank account or post office savings account."
+      },
+      "humanText": {
+        "en": "You must have a savings bank account.",
+        "hi": "आपके पास बचत बैंक खाता होना चाहिए।"
+      },
+      "remedy": {
+        "en": "Open a savings bank account to enrol in APY.",
+        "hi": "APY में नामांकन के लिए बचत बैंक खाता खोलें।",
+        "counterfactual": { "attribute": "hasBankAccount", "value": true }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "APY-X-01",
+      "kind": "exclusion",
+      "attribute": "isGovtEmployee",
+      "op": "is_true",
+      "citation": {
+        "page": 3,
+        "section": "3.1",
+        "quote": "Government employees who are already covered under statutory social security schemes are not eligible."
+      },
+      "humanText": {
+        "en": "Government employees covered under statutory social security are not eligible.",
+        "hi": "वैधानिक सामाजिक सुरक्षा के अंतर्गत आने वाले सरकारी कर्मचारी पात्र नहीं हैं।"
+      },
+      "remedy": {
+        "en": "You are already covered by a statutory social security scheme as a government employee.",
+        "hi": "आप सरकारी कर्मचारी के रूप में पहले से वैधानिक सामाजिक सुरक्षा योजना में शामिल हैं।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    }
+  ]
+}

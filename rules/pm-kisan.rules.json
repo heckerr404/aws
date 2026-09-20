@@ -1,0 +1,136 @@
+{
+  "schemeId": "pm-kisan",
+  "name": { "en": "PM-KISAN", "hi": "पीएम-किसान" },
+  "ministry": "Ministry of Agriculture & Farmers Welfare",
+  "officialUrl": "https://pmkisan.gov.in",
+  "sourcePdfKey": "raw/pm-kisan.pdf",
+  "clauses": [
+    {
+      "clauseId": "PMK-R-01",
+      "kind": "requirement",
+      "attribute": "occupation",
+      "op": "eq",
+      "value": "farmer",
+      "citation": {
+        "page": 2,
+        "section": "1.1",
+        "quote": "All landholding farmer families shall be eligible to get income support under this scheme."
+      },
+      "humanText": {
+        "en": "You must be a farmer (farming must be your occupation).",
+        "hi": "आप किसान होने चाहिए (खेती आपका पेशा होनी चाहिए)।"
+      },
+      "remedy": {
+        "en": "This scheme is only for farmers.",
+        "hi": "यह योजना केवल किसानों के लिए है।",
+        "counterfactual": { "attribute": "occupation", "value": "farmer" }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMK-R-02",
+      "kind": "requirement",
+      "attribute": "hasCultivableLand",
+      "op": "is_true",
+      "citation": {
+        "page": 2,
+        "section": "1.1",
+        "quote": "The farmer family must have cultivable land in their names as per land records."
+      },
+      "humanText": {
+        "en": "You must have cultivable land registered in your name.",
+        "hi": "आपके नाम पर कृषि योग्य भूमि होनी चाहिए।"
+      },
+      "remedy": {
+        "en": "You must own cultivable land to qualify.",
+        "hi": "पात्र होने के लिए आपके पास कृषि योग्य भूमि होनी चाहिए।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMK-R-03",
+      "kind": "requirement",
+      "attribute": "hasBankAccount",
+      "op": "is_true",
+      "citation": {
+        "page": 3,
+        "section": "2.3",
+        "quote": "The benefit will be directly transferred to the bank accounts of the beneficiaries."
+      },
+      "humanText": {
+        "en": "You must have a bank account for direct benefit transfer.",
+        "hi": "लाभ हस्तांतरण के लिए आपके पास बैंक खाता होना चाहिए।"
+      },
+      "remedy": {
+        "en": "Open a bank account to receive the benefit transfer.",
+        "hi": "लाभ प्राप्त करने के लिए बैंक खाता खोलें।",
+        "counterfactual": { "attribute": "hasBankAccount", "value": true }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMK-X-01",
+      "kind": "exclusion",
+      "attribute": "isIncomeTaxPayer",
+      "op": "is_true",
+      "citation": {
+        "page": 4,
+        "section": "2.5",
+        "quote": "Income Tax assessees are not eligible for the scheme."
+      },
+      "humanText": {
+        "en": "You must not be an income tax payer.",
+        "hi": "आप आयकर दाता नहीं होने चाहिए।"
+      },
+      "remedy": {
+        "en": "Income tax payers are excluded from this scheme.",
+        "hi": "आयकर दाता इस योजना के लिए पात्र नहीं हैं।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMK-X-02",
+      "kind": "exclusion",
+      "attribute": "isGovtEmployee",
+      "op": "is_true",
+      "citation": {
+        "page": 4,
+        "section": "2.5",
+        "quote": "Government employees (past and present) are not eligible under this scheme."
+      },
+      "humanText": {
+        "en": "You must not be a current or former government employee.",
+        "hi": "आप वर्तमान या पूर्व सरकारी कर्मचारी नहीं होने चाहिए।"
+      },
+      "remedy": {
+        "en": "Government employees are excluded from this scheme.",
+        "hi": "सरकारी कर्मचारी इस योजना के लिए पात्र नहीं हैं।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMK-X-03",
+      "kind": "exclusion",
+      "attribute": "isInstitutionalLandHolder",
+      "op": "is_true",
+      "citation": {
+        "page": 4,
+        "section": "2.5",
+        "quote": "Institutional land holders are not eligible."
+      },
+      "humanText": {
+        "en": "Institutional land holders are not eligible.",
+        "hi": "संस्थागत भूमिधारक पात्र नहीं हैं।"
+      },
+      "remedy": {
+        "en": "This exclusion applies to institutional land holders.",
+        "hi": "यह बहिष्करण संस्थागत भूमिधारकों पर लागू होता है।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    }
+  ]
+}

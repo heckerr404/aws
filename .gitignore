@@ -1,0 +1,16 @@
+# Haqdaar — build artifacts
+.aws-sam/
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.env*
+*.zip
+
+# AWS secrets / generated files
+.policy-store-id
+samconfig.toml  # NOTE: samconfig.toml is committed (no secrets in it)
+
+# macOS
+.DS_Store

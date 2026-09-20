@@ -1,0 +1,295 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Haqdaar – Deterministic welfare scheme eligibility engine using Amazon Verified Permissions (Cedar)
+
+Parameters:
+  PolicyStoreId:
+    Type: String
+    Default: ""
+    Description: AVP policy store id (created by scripts/bootstrap_avp.py)
+  BedrockModelId:
+    Type: String
+    Default: ""
+    Description: >
+      Bedrock model id or inference-profile id (e.g. anthropic.claude-3-5-haiku-20241022-v1:0).
+      Must be enabled in Bedrock console → Model access.
+  AllowedOrigin:
+    Type: String
+    Default: "*"
+    Description: CORS allowed origin. Tighten to the Amplify domain after first deploy.
+  LogRetentionDays:
+    Type: Number
+    Default: 14
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Architectures: [arm64]
+    MemorySize: 512
+    Timeout: 20
+    Tracing: Disabled
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref HaqdaarTable
+        BUCKET_NAME: !Ref SchemesBucket
+        POLICY_STORE_ID: !Ref PolicyStoreId
+        BEDROCK_MODEL_ID: !Ref BedrockModelId
+        LOG_LEVEL: INFO
+
+Resources:
+
+  # ── DynamoDB ──────────────────────────────────────────────────────────────
+  HaqdaarTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1PK
+          AttributeType: S
+        - AttributeName: GSI1SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1PK
+              KeyType: HASH
+            - AttributeName: GSI1SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: false  # Disabled for hackathon cost control
+
+  # ── S3 ───────────────────────────────────────────────────────────────────
+  SchemesBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteExtractedAfter30Days
+            Status: Enabled
+            Prefix: extracted/
+            ExpirationInDays: 30
+
+  # ── HTTP API ──────────────────────────────────────────────────────────────
+  HaqdaarApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: v1
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - content-type
+        MaxAge: 600
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 20
+        ThrottlingRateLimit: 10
+      AccessLogSettings:
+        DestinationArn: !GetAtt HaqdaarApiLogs.Arn
+        # Deliberately omits request body fields for privacy
+        Format: >-
+          {"requestId":"$context.requestId","routeKey":"$context.routeKey",
+          "status":"$context.status","latencyMs":"$context.responseLatency",
+          "integrationStatus":"$context.integration.status"}
+
+  HaqdaarApiLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/apigateway/haqdaar-${AWS::StackName}"
+      RetentionInDays: !Ref LogRetentionDays
+
+  # ── Lambda Functions ──────────────────────────────────────────────────────
+
+  # check_eligibility — the core decision engine (POST /check)
+  CheckEligibilityFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: functions.check_eligibility.app.handler
+      Timeout: 25
+      Events:
+        CheckApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HaqdaarApi
+            Method: POST
+            Path: /check
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - verifiedpermissions:IsAuthorized
+                - verifiedpermissions:BatchIsAuthorized
+              Resource: !Sub "arn:aws:verifiedpermissions::${AWS::AccountId}:policy-store/${PolicyStoreId}"
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:GetItem
+              Resource:
+                - !GetAtt HaqdaarTable.Arn
+                - !Sub "${HaqdaarTable.Arn}/index/GSI1"
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource:
+                # NOTE: Narrow to exact model/inference-profile ARN before demo
+                - !Sub "arn:aws:bedrock:${AWS::Region}::foundation-model/*"
+                - !Sub "arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:inference-profile/*"
+
+  CheckEligibilityLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${CheckEligibilityFunction}"
+      RetentionInDays: !Ref LogRetentionDays
+
+  # get_schemes — catalog endpoint (GET /schemes)
+  GetSchemesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: functions.get_schemes.app.handler
+      Timeout: 10
+      Events:
+        SchemesApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HaqdaarApi
+            Method: GET
+            Path: /schemes
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+              Resource:
+                - !GetAtt HaqdaarTable.Arn
+                - !Sub "${HaqdaarTable.Arn}/index/GSI1"
+
+  GetSchemesLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${GetSchemesFunction}"
+      RetentionInDays: !Ref LogRetentionDays
+
+  # ingest_scheme — authoring path, async invoke only (NOT on HTTP API)
+  IngestSchemeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: functions.ingest_scheme.app.handler
+      Timeout: 900
+      MemorySize: 1024
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+              Resource: !Sub "${SchemesBucket.Arn}/*"
+            - Effect: Allow
+              Action:
+                - textract:StartDocumentTextDetection
+                - textract:GetDocumentTextDetection
+              Resource: "*"  # Textract has no resource-level scoping for these actions
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource:
+                # NOTE: Narrow to exact model/inference-profile ARN before demo
+                - !Sub "arn:aws:bedrock:${AWS::Region}::foundation-model/*"
+                - !Sub "arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:inference-profile/*"
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource: !GetAtt HaqdaarTable.Arn
+
+  IngestSchemeLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${IngestSchemeFunction}"
+      RetentionInDays: !Ref LogRetentionDays
+
+  # compile_publish — compiles approved rules to Cedar policies in AVP
+  CompilePublishFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: functions.compile_publish.app.handler
+      Timeout: 60
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+              Resource: !Sub "${SchemesBucket.Arn}/approved/*"
+            - Effect: Allow
+              Action:
+                - verifiedpermissions:CreatePolicy
+                - verifiedpermissions:DeletePolicy
+                - verifiedpermissions:ListPolicies
+              Resource: !Sub "arn:aws:verifiedpermissions::${AWS::AccountId}:policy-store/${PolicyStoreId}"
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+                - dynamodb:Query
+                - dynamodb:DeleteItem
+              Resource:
+                - !GetAtt HaqdaarTable.Arn
+                - !Sub "${HaqdaarTable.Arn}/index/GSI1"
+
+  CompilePublishLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${CompilePublishFunction}"
+      RetentionInDays: !Ref LogRetentionDays
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${HaqdaarApi}.execute-api.${AWS::Region}.amazonaws.com/v1"
+  TableName:
+    Description: DynamoDB table name
+    Value: !Ref HaqdaarTable
+  BucketName:
+    Description: S3 bucket name
+    Value: !Ref SchemesBucket
+  IngestFunctionName:
+    Description: Ingest Lambda function name
+    Value: !Ref IngestSchemeFunction
+  CompileFunctionName:
+    Description: Compile+publish Lambda function name
+    Value: !Ref CompilePublishFunction
+  CheckFunctionName:
+    Description: CheckEligibility Lambda function name
+    Value: !Ref CheckEligibilityFunction

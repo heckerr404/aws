@@ -1,0 +1,116 @@
+{
+  "schemeId": "pm-vishwakarma",
+  "name": { "en": "PM Vishwakarma", "hi": "पीएम विश्वकर्मा" },
+  "ministry": "Ministry of Micro, Small and Medium Enterprises",
+  "officialUrl": "https://pmvishwakarma.gov.in",
+  "sourcePdfKey": "raw/pm-vishwakarma.pdf",
+  "clauses": [
+    {
+      "clauseId": "PMV-R-01",
+      "kind": "requirement",
+      "attribute": "occupation",
+      "op": "eq",
+      "value": "artisan",
+      "citation": {
+        "page": 3,
+        "section": "3.1",
+        "quote": "Artisans and craftspeople working with hands and tools shall be eligible."
+      },
+      "humanText": {
+        "en": "You must be an artisan or craftsperson.",
+        "hi": "आप कारीगर या शिल्पकार होने चाहिए।"
+      },
+      "remedy": {
+        "en": "This scheme is only for artisans working with hands and tools.",
+        "hi": "यह योजना केवल हाथ और औजारों से काम करने वाले कारीगरों के लिए है।",
+        "counterfactual": { "attribute": "occupation", "value": "artisan" }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMV-R-02",
+      "kind": "requirement",
+      "attribute": "age",
+      "op": "gte",
+      "value": 18,
+      "citation": {
+        "page": 3,
+        "section": "3.2",
+        "quote": "Applicant must be 18 years of age or above on the date of registration."
+      },
+      "humanText": {
+        "en": "You must be at least 18 years old.",
+        "hi": "आपकी आयु कम से कम 18 वर्ष होनी चाहिए।"
+      },
+      "remedy": {
+        "en": "You must be at least 18 years old to apply.",
+        "hi": "आवेदन करने के लिए आपकी आयु कम से कम 18 वर्ष होनी चाहिए।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMV-R-03",
+      "kind": "requirement",
+      "attribute": "hasBankAccount",
+      "op": "is_true",
+      "citation": {
+        "page": 5,
+        "section": "4.1",
+        "quote": "Applicant must have a valid bank account for benefit disbursement."
+      },
+      "humanText": {
+        "en": "You must have a bank account.",
+        "hi": "आपके पास बैंक खाता होना चाहिए।"
+      },
+      "remedy": {
+        "en": "Open a bank account to receive scheme benefits.",
+        "hi": "योजना का लाभ प्राप्त करने के लिए बैंक खाता खोलें।",
+        "counterfactual": { "attribute": "hasBankAccount", "value": true }
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMV-X-01",
+      "kind": "exclusion",
+      "attribute": "isGovtEmployee",
+      "op": "is_true",
+      "citation": {
+        "page": 4,
+        "section": "3.4",
+        "quote": "Government employees and their family members are not eligible."
+      },
+      "humanText": {
+        "en": "Government employees are not eligible.",
+        "hi": "सरकारी कर्मचारी पात्र नहीं हैं।"
+      },
+      "remedy": {
+        "en": "Government employees and their families are excluded.",
+        "hi": "सरकारी कर्मचारी और उनके परिवार के सदस्य पात्र नहीं हैं।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    },
+    {
+      "clauseId": "PMV-X-02",
+      "kind": "exclusion",
+      "attribute": "hasAvailedSimilarCreditScheme5y",
+      "op": "is_true",
+      "citation": {
+        "page": 4,
+        "section": "3.5",
+        "quote": "Beneficiaries who have availed loans under similar government credit schemes in the last 5 years are not eligible."
+      },
+      "humanText": {
+        "en": "You must not have availed a similar government credit scheme in the last 5 years.",
+        "hi": "आपने पिछले 5 वर्षों में इसी तरह की सरकारी ऋण योजना का लाभ नहीं उठाया होना चाहिए।"
+      },
+      "remedy": {
+        "en": "Prior beneficiaries of similar credit schemes are excluded for 5 years.",
+        "hi": "समान ऋण योजनाओं के पूर्व लाभार्थी 5 वर्षों के लिए पात्र नहीं हैं।",
+        "counterfactual": null
+      },
+      "verified": { "by": "TODO", "at": "" }
+    }
+  ]
+}
