@@ -14,6 +14,8 @@ export default function Header({ t, lang, onLangChange, backendStatus, identity,
   const navItems = [
     { label: t.browseSchemesNav || "Browse Schemes", to: "/schemes" },
     { label: t.checkEligibilityBtn, to: "/" },
+    { label: t.documentMapNav || "Document Map", to: "/document-map" },
+    { label: t.frontlineModeNav || "Frontline Mode", to: "/frontline" },
     { label: t.featuresNav || "Features", to: "/features" },
     { label: t.howItWorksBtn, to: "/how-it-works" },
   ];

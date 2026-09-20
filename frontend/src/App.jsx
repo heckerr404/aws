@@ -17,6 +17,8 @@ import BreakItPanel from "./components/BreakItPanel";
 import FeaturesPage from "./components/FeaturesPage";
 import HowItWorksPage from "./components/HowItWorksPage";
 import SchemesPage from "./components/SchemesPage";
+import DocumentMapPage from "./components/DocumentMapPage";
+import FrontlineModePage from "./components/FrontlineModePage";
 import { ONBOARDED_SCHEMES } from "./schemesData";
 import { IconLightning, IconArrowDown, IconShieldLocker, IconShieldCheck } from "./components/icons";
 import { useSpeech } from "./useSpeech";
@@ -518,6 +520,8 @@ export default function App() {
               />
             }
           />
+          <Route path="/document-map" element={<DocumentMapPage t={t} lang={lang} />} />
+          <Route path="/frontline" element={<FrontlineModePage t={t} lang={lang} />} />
           <Route path="/features" element={<FeaturesPage t={t} />} />
           <Route path="/how-it-works" element={<HowItWorksPage t={t} />} />
         </Routes>

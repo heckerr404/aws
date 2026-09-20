@@ -5,7 +5,9 @@ import {
   IconReceipt,
   IconMicrophone,
   IconLocationPin,
-  IconGridScan
+  IconGridScan,
+  IconMapTree,
+  IconUsersGroup
 } from "./icons";
 
 export default function FeaturesSection({ t }) {
@@ -33,6 +35,22 @@ export default function FeaturesSection({ t }) {
       description:
         t.featureReceiptsDesc ||
         "Get the exact clause and reason behind every eligible or not-eligible result."
+    },
+    {
+      id: "docmap",
+      icon: <IconMapTree size={22} />,
+      title: t.featureDocMapTitle || "Document Dependency Map",
+      description:
+        t.featureDocMapDesc ||
+        "See exact prerequisite chains for every scheme — know which certificate to get first before applying."
+    },
+    {
+      id: "frontline",
+      icon: <IconUsersGroup size={22} />,
+      title: t.featureFrontlineTitle || "Frontline Worker Mode",
+      description:
+        t.featureFrontlineDesc ||
+        "Batch evaluate whole villages and self-help groups at once with unified cohort exports and statistics."
     },
     {
       id: "voice",
