@@ -7,7 +7,7 @@ import { useAuth } from "./auth/AuthContext";
 import LoginPage from "./auth/LoginPage";
 import FaceVerify from "./auth/FaceVerify";
 
-import DemoBanner from "./components/DemoBanner";
+
 import Header from "./components/Header";
 import AadhaarCard from "./components/AadhaarCard";
 import ProfileForm from "./components/ProfileForm";
@@ -459,7 +459,6 @@ export default function App() {
 
   return (
     <div className="app-shell-wrapper" lang={lang}>
-      <DemoBanner t={t} lang={lang} />
 
       <div className="shell-grid">
         <Header
