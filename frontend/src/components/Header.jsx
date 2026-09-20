@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import LanguageToggle from "./LanguageToggle";
-import DemoBanner from "./DemoBanner";
 
 export default function Header({ t, lang, onLangChange, backendStatus, identity, onLogout, onFaceVerify }) {
 
@@ -30,16 +29,13 @@ export default function Header({ t, lang, onLangChange, backendStatus, identity,
           <h1 className="brand-wordmark">
             Haqdaar<span className="brand-dot">.</span>
           </h1>
-          <div className="sidebar-brand-row">
-            <div 
-              className="engine-status-pill"
-              title={`Backend status: ${backendStatus}`}
-              aria-live="polite"
-            >
-              <span className={`status-dot ${backendStatus}`} />
-              <span>{statusLabels[backendStatus] || backendStatus}</span>
-            </div>
-            <DemoBanner />
+          <div 
+            className="engine-status-pill"
+            title={`Backend status: ${backendStatus}`}
+            aria-live="polite"
+          >
+            <span className={`status-dot ${backendStatus}`} />
+            <span>{statusLabels[backendStatus] || backendStatus}</span>
           </div>
         </div>
 
