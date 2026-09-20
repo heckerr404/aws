@@ -1,5 +1,5 @@
 import React from "react";
-import { IconCardChip, IconLock, IconShieldLocker } from "./icons";
+import { IconCardChip, IconShieldLocker } from "./icons";
 import { AadhaarTopStripe, AadhaarDotTexture } from "./AadhaarCardHeader";
 
 export default function AadhaarCard({
@@ -126,14 +126,6 @@ export default function AadhaarCard({
           </button>
         </div>
       )}
-
-      <div className="privacy-guarantee-card">
-        <IconLock size={18} style={{ color: "var(--ink)", flexShrink: 0, marginTop: "2px" }} />
-        <div>
-          <strong style={{ color: "var(--ink)", fontWeight: 700 }}>🔒 Privacy Guarantee: </strong>
-          <span style={{ color: "var(--ink-2)", fontWeight: 400 }}>{t.aadhaarNote}</span>
-        </div>
-      </div>
     </div>
   );
 }

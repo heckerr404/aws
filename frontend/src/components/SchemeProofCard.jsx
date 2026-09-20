@@ -116,9 +116,7 @@ export default function SchemeProofCard({ t, lang, scheme, isChanged, speech }) 
       {sortedClauses.length > 0 && (
         <div>
           <div className="clause-section-label">
-            {scheme.citationVerified
-              ? (t.clausesTitle || "STATUTORY CLAUSE VERIFICATION TABLE")
-              : (t.ruleBasedEligibilityCheck || "RULE-BASED ELIGIBILITY CHECK")}
+            {lang === "hi" ? "पात्रता मानदंड" : "ELIGIBILITY CRITERIA"}
           </div>
           <div className="clause-history-list">
             {sortedClauses.map((clause) => (
@@ -127,17 +125,9 @@ export default function SchemeProofCard({ t, lang, scheme, isChanged, speech }) 
                 t={t}
                 lang={lang}
                 clause={clause}
-                hideCitation={!scheme.citationVerified}
               />
             ))}
           </div>
-          {!scheme.citationVerified && (
-            <p className="rule-based-note" style={{ fontSize: "0.78rem", color: "var(--muted)", marginTop: "0.45rem", fontStyle: "italic" }}>
-              {lang === "hi"
-                ? "योजना नियमों पर आधारित — इस योजना के लिए आधिकारिक खंड उद्धरण सत्यापन लंबित है।"
-                : "Based on scheme rules — official clause citations pending verification for this scheme."}
-            </p>
-          )}
         </div>
       )}
 

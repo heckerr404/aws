@@ -29,14 +29,6 @@ export default function Header({ t, lang, onLangChange, backendStatus, identity,
           <h1 className="brand-wordmark">
             Haqdaar<span className="brand-dot">.</span>
           </h1>
-          <div 
-            className="engine-status-pill"
-            title={`Backend status: ${backendStatus}`}
-            aria-live="polite"
-          >
-            <span className={`status-dot ${backendStatus}`} />
-            <span>{statusLabels[backendStatus] || backendStatus}</span>
-          </div>
         </div>
 
         <nav className="sidebar-nav">
