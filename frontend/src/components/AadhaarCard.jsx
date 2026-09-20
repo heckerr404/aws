@@ -12,6 +12,8 @@ export default function AadhaarCard({
   onDobChange,
   onGenderChange,
   onOpenDigiLocker,
+  onOpenFaceVerify,
+  isFaceVerified,
 }) {
   const handleAadhaarChange = (e) => {
     const raw = e.target.value.replace(/\D/g, "").slice(0, 12);
@@ -112,8 +114,8 @@ export default function AadhaarCard({
         </div>
       </div>
 
-      {onOpenDigiLocker && (
-        <div style={{ marginTop: "0.6rem", display: "flex", justifyContent: "center" }}>
+      <div style={{ marginTop: "0.6rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {onOpenDigiLocker && (
           <button
             type="button"
             className="btn-digilocker-inline"
@@ -124,8 +126,22 @@ export default function AadhaarCard({
             <IconShieldLocker size={15} />
             <span>Auto-fill documents via DigiLocker</span>
           </button>
-        </div>
-      )}
+        )}
+
+        {onOpenFaceVerify && (
+          <button
+            type="button"
+            className={`btn-face-verify-inline ${isFaceVerified ? "verified" : ""}`}
+            onClick={onOpenFaceVerify}
+            style={{ width: "100%", justifyContent: "center", padding: "0.5rem" }}
+            title="Run on-device biometric face verification"
+          >
+            <span>📷</span>
+            <span>{isFaceVerified ? "Biometric Face Verified (Re-verify)" : "Verify Face (Biometric Liveness)"}</span>
+            {isFaceVerified && <span className="face-verified-tick" title="Face verified">✅</span>}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

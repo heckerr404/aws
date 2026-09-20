@@ -16,6 +16,7 @@ export default function Header({ t, lang, onLangChange, backendStatus, identity,
     { label: t.checkEligibilityBtn, to: "/" },
     { label: t.documentMapNav || "Document Map", to: "/document-map" },
     { label: t.frontlineModeNav || "Frontline Mode", to: "/frontline" },
+    { label: t.faceVerifyNav || "Face Verification", to: "/face-verify" },
     { label: t.featuresNav || "Features", to: "/features" },
     { label: t.howItWorksBtn, to: "/how-it-works" },
   ];
@@ -51,22 +52,25 @@ export default function Header({ t, lang, onLangChange, backendStatus, identity,
 
       <div className="sidebar-bottom">
         {identity && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "0.75rem" }}>
-            <button
-              type="button"
-              className="user-identity-chip"
-              onClick={onFaceVerify}
-              title="Run face liveness check"
-              style={{ justifyContent: "flex-start" }}
-            >
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginBottom: "0.75rem" }}>
+            <div className="user-identity-chip" style={{ justifyContent: "flex-start", cursor: "default" }}>
               <span className="user-avatar-dot">{initials}</span>
               <span style={{ flexGrow: 1, textAlign: "left" }}>{identity.name.split(" ")[0]}</span>
               {identity.faceVerified && <span className="face-verified-tick" title="Face verified">✅</span>}
+            </div>
+            <button
+              type="button"
+              className="btn-face-verify-sidebar"
+              onClick={onFaceVerify}
+              title="Run biometric face liveness check"
+            >
+              <span>📷</span>
+              <span>{identity.faceVerified ? "Face Verified ✓" : "Verify Face"}</span>
             </button>
             <button
               type="button"
               className="login-btn-ghost"
-              style={{ fontSize: "0.75rem", padding: "0.4rem 0.75rem", borderRadius: "10px" }}
+              style={{ fontSize: "0.75rem", padding: "0.35rem 0.75rem", borderRadius: "8px" }}
               onClick={onLogout}
             >
               Sign out

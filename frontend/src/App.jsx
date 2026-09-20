@@ -19,6 +19,7 @@ import HowItWorksPage from "./components/HowItWorksPage";
 import SchemesPage from "./components/SchemesPage";
 import DocumentMapPage from "./components/DocumentMapPage";
 import FrontlineModePage from "./components/FrontlineModePage";
+import FaceVerifyPage from "./components/FaceVerifyPage";
 import { ONBOARDED_SCHEMES } from "./schemesData";
 import { IconLightning, IconArrowDown, IconShieldLocker, IconShieldCheck } from "./components/icons";
 import { useSpeech } from "./useSpeech";
@@ -36,7 +37,9 @@ function HomePage({
   navigate,
   highlightedScheme, onClearHighlightedScheme,
   singleSchemeResult, onViewAllSchemes,
-  onOpenDigiLocker
+  onOpenDigiLocker,
+  onOpenFaceVerify,
+  isFaceVerified
 }) {
   return (
     <main className="bento-grid">
@@ -153,6 +156,8 @@ function HomePage({
           onGenderChange={(val) => setProfile((p) => ({ ...p, gender: val }))}
           speech={speech}
           onOpenDigiLocker={onOpenDigiLocker}
+          onOpenFaceVerify={onOpenFaceVerify}
+          isFaceVerified={isFaceVerified}
         />
 
         <ProfileForm
@@ -233,8 +238,9 @@ function HomePage({
 
 /* ─── Root App with Shared Layout + Routes ─── */
 export default function App() {
-  const { identity, logout } = useAuth();
+  const { identity, logout, markFaceVerified } = useAuth();
   const [showFaceVerify, setShowFaceVerify] = useState(false);
+  const [faceToast, setFaceToast] = useState(null);
   const speech = useSpeech();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -447,17 +453,12 @@ export default function App() {
     );
   }
 
-  /* Face verification screen */
-  if (showFaceVerify) {
-    return (
-      <FaceVerify
-        lang={lang}
-        onPass={() => setShowFaceVerify(false)}
-        onCancel={() => setShowFaceVerify(false)}
-        onSkip={() => setShowFaceVerify(false)}
-      />
-    );
-  }
+  const handleFaceVerifyPass = () => {
+    markFaceVerified();
+    setShowFaceVerify(false);
+    setFaceToast("Biometric Face Verification Successful ✓");
+    setTimeout(() => setFaceToast(null), 4000);
+  };
 
   return (
     <div className="app-shell-wrapper" lang={lang}>
@@ -495,6 +496,8 @@ export default function App() {
                 singleSchemeResult={singleSchemeResult}
                 onViewAllSchemes={handleViewAllSchemes}
                 onOpenDigiLocker={() => setShowDigiLockerModal(true)}
+                onOpenFaceVerify={() => setShowFaceVerify(true)}
+                isFaceVerified={identity?.faceVerified}
               />
             }
           />
@@ -522,6 +525,7 @@ export default function App() {
           />
           <Route path="/document-map" element={<DocumentMapPage t={t} lang={lang} />} />
           <Route path="/frontline" element={<FrontlineModePage t={t} lang={lang} />} />
+          <Route path="/face-verify" element={<FaceVerifyPage t={t} lang={lang} />} />
           <Route path="/features" element={<FeaturesPage t={t} />} />
           <Route path="/how-it-works" element={<HowItWorksPage t={t} />} />
         </Routes>
@@ -567,6 +571,24 @@ export default function App() {
           }, 150);
         }}
       />
+
+      {/* Face Verification Modal */}
+      {showFaceVerify && (
+        <FaceVerify
+          lang={lang}
+          onPass={handleFaceVerifyPass}
+          onCancel={() => setShowFaceVerify(false)}
+          onSkip={() => setShowFaceVerify(false)}
+        />
+      )}
+
+      {/* Face Verification Toast */}
+      {faceToast && (
+        <div className="digilocker-toast" role="status" aria-live="polite">
+          <IconShieldCheck size={20} />
+          <span>{faceToast}</span>
+        </div>
+      )}
 
       {/* DigiLocker Toast */}
       {digiLockerToast && (
