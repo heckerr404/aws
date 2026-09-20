@@ -161,7 +161,6 @@ export default function LoginPage({ onLoginComplete }) {
         <div className="login-header">
           <h1 className="login-brand">Haqdaar</h1>
           <p className="login-tagline">Your rights, verified.</p>
-          <span className="demo-badge">DEMO — Not UIDAI</span>
         </div>
 
         {/* Progress dots */}
