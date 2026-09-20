@@ -3766,7 +3766,12 @@ a:focus-visible {
 /* ─────────────────────────────────────────────────────────────
    FEATURE 1: DOCUMENT DEPENDENCY MAP (/document-map)
    ───────────────────────────────────────────────────────────── */
+.document-map-page > * {
+  grid-column: span 12;
+}
+
 .doc-map-hero-card {
+  grid-column: span 12;
   padding: 1.75rem 2rem;
   background: var(--card);
   border: 1px solid var(--line);
@@ -4391,7 +4396,12 @@ a:focus-visible {
 /* ─────────────────────────────────────────────────────────────
    FEATURE 2: FRONTLINE WORKER MODE (/frontline)
    ───────────────────────────────────────────────────────────── */
+.frontline-page > * {
+  grid-column: span 12;
+}
+
 .frontline-hero-card {
+  grid-column: span 12;
   padding: 1.75rem 2rem;
   background: var(--card);
   border: 1px solid var(--line);
