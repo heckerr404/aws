@@ -60,19 +60,6 @@ export default function FaceVerify({ onPass, onCancel, onSkip, lang }) {
   const t = translations[currentLang] || translations.en;
   const allowSkip = import.meta.env.VITE_ALLOW_FACE_SKIP !== "false";
 
-  const handleSimulatePass = useCallback(() => {
-    stopCamera();
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    stateRef.current = "verified";
-    setUiState("verified");
-    setRingColor("#22c55e");
-    setRingProgress(1);
-    markFaceVerified();
-    setTimeout(() => {
-      onPass?.();
-    }, 1000);
-  }, [markFaceVerified, onPass, stopCamera]);
-
   // Check ?debug=1
   const isDebug =
     typeof window !== "undefined" &&
@@ -162,6 +149,20 @@ export default function FaceVerify({ onPass, onCancel, onSkip, lang }) {
     }
     logDebug("camera_stopped", { active: false });
   }, [logDebug]);
+
+  // Simulate a verified pass (demo mode / no camera)
+  const handleSimulatePass = useCallback(() => {
+    stopCamera();
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    stateRef.current = "verified";
+    setUiState("verified");
+    setRingColor("#22c55e");
+    setRingProgress(1);
+    markFaceVerified();
+    setTimeout(() => {
+      onPass?.();
+    }, 1000);
+  }, [markFaceVerified, onPass, stopCamera]);
 
   // Fail current attempt
   const triggerFail = useCallback(
