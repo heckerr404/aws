@@ -19,6 +19,14 @@ make smoke          # smoke test against live API
 make web            # run frontend dev server (needs VITE_API_BASE_URL)
 ```
 
+## Features
+
+- **Verifiable Decision Receipts**: Deterministic rule evaluation via Amazon Verified Permissions (Cedar) with auditable decision receipts.
+- **Document Dependency Map**: Interactive visualization of prerequisite documents across schemes.
+- **Frontline Worker Mode**: Specialized workflow tailored for field agents and community volunteers.
+- **Face Verification & Identity Demo**: Simulated biometric verification workflow with camera integration.
+- **Bilingual Support**: Full English and Hindi UI localization.
+
 ## Stack
 
 Amazon S3 · AWS Lambda (Python 3.12) · Amazon Textract · Amazon Bedrock · Amazon Verified Permissions · Amazon DynamoDB · Amazon API Gateway (HTTP API) · AWS Amplify Hosting · AWS SAM CLI · React + Vite
