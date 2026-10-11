@@ -222,6 +222,54 @@ export const SCHEME_DOCUMENT_DEPENDENCIES = {
     unverified: false,
     notes: "Direct Benefit Transfer goes strictly to Aadhaar-seeded NPCI mapped bank accounts."
   },
+  "atal-pension-yojana": {
+    schemeName: "Atal Pension Yojana (APY)",
+    category: "Pensions/Insurance & Social Security",
+    required: [
+      "Aadhaar Card",
+      "Active Savings Bank Account Passbook"
+    ],
+    dependencies: {
+      "Active Savings Bank Account Passbook": [
+        "Aadhaar Card",
+        "PAN Card"
+      ],
+      "PAN Card": [
+        "Aadhaar Card"
+      ]
+    },
+    unverified: false,
+    notes: "Requires an active savings bank account linked with Aadhaar for monthly pension auto-debit."
+  },
+  "central-sector-scholarship": {
+    schemeName: "Central Sector Scheme of Scholarship for College and University Students",
+    category: "Education/Scholarships & Youth",
+    required: [
+      "Aadhaar Card",
+      "College Admission Slip & Fee Receipt",
+      "Class 10 & 12 Marksheets",
+      "Income Certificate",
+      "Active Savings Bank Account Passbook"
+    ],
+    dependencies: {
+      "College Admission Slip & Fee Receipt": [
+        "Class 10 & 12 Marksheets"
+      ],
+      "Income Certificate": [
+        "Self-Declaration Affidavit / Patwari Income Inquiry",
+        "Residence Proof / Utility Bill"
+      ],
+      "Active Savings Bank Account Passbook": [
+        "Aadhaar Card",
+        "PAN Card"
+      ],
+      "PAN Card": [
+        "Aadhaar Card"
+      ]
+    },
+    unverified: false,
+    notes: "Direct Benefit Transfer is disbursed directly to students' Aadhaar-seeded bank accounts upon college admission verification."
+  },
   "pm-vishwakarma": {
     schemeName: "PM Vishwakarma Scheme",
     category: "Entrepreneurship/Skilling & Urban Welfare",

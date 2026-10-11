@@ -898,7 +898,7 @@ export const ONBOARDED_SCHEMES = [
       "en": "Guaranteed pension (₹1,000 - ₹5,000) at age 60.",
       "hi": "60 वर्ष की आयु के बाद ₹1,000 से ₹5,000 गारंटीकृत पेंशन।"
     },
-    "citationVerified": false,
+    "citationVerified": true,
     "icon": "🛡️",
     "clausesCount": 4,
     "officialUrl": "https://npscra.nsdl.co.in",

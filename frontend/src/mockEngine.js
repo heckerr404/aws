@@ -203,6 +203,12 @@ function evaluateRuleBasedScheme(schemeId, attrs) {
       break;
 
     // ── Education ──
+    case "central-sector-scholarship":
+      passed = enrolled && p12 >= 80 && income <= 450000 && bank && !govt;
+      if (!passed) {
+        failedClauseDesc = { en: "Requires regular higher education enrollment, top 20 percentile in Class 12, annual family income <= ₹4.5 Lakh, active bank account, and non-government employee status.", hi: "नियमित उच्च शिक्षा में नामांकन, कक्षा 12 में शीर्ष 20 प्रतिशत, वार्षिक पारिवारिक आय ₹4.5 लाख तक, सक्रिय बैंक खाता और गैर-सरकारी कर्मचारी होना आवश्यक है।" };
+      }
+      break;
     case "nmmss":
       passed = age >= 12 && age <= 16 && income <= 350000;
       if (!passed) {
