@@ -9,7 +9,7 @@ Architecture rules (from Master Context):
 - Decision comes 100% from AVP batch_is_authorized.
 - Bedrock is used ONLY to rephrase the already-decided result, and ONLY if explain=true.
 - DOB is discarded immediately after age computation.
-- No profile data is logged or stored.....
+- No profile data is logged or stored.
 """
 import hashlib
 import json
@@ -120,7 +120,6 @@ def _make_receipt(policy_hash: str, attrs: dict) -> dict:
     }
 
 
-# ── Counterfactuals ───────────────────────────────────────────────────────────
 # ── Counterfactuals ───────────────────────────────────────────────────────────
 
 def _compute_counterfactuals(
